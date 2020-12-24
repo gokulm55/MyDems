@@ -1,4 +1,27 @@
 package com.example.mydems.dataclass
+
+//data class UserLoginData(
+//    val success: String,
+//    val token: String,
+//    val message: String,
+//    val data: userData,
+//    val errors: LoginError
+//)
+//data class LoginError(
+//    val password: ArrayList<String>
+//
+//)
+//data class userData(
+//    val success: String,
+//    val id: String,
+//    val user_type: String,
+//    val name: String,
+//    val email: String,
+//    val phone: String,
+//    val gender: String,
+//    val profile_pic: String
+//
+//)
 data class data (
     val id : String,
     val user_type : String,

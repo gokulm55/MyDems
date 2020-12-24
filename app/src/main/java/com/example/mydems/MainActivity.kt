@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import com.example.mydems.dataclass.ApiClient
+
 import com.example.mydems.dataclass.profile
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,8 +30,9 @@ class MainActivity : AppCompatActivity() {
             val call: Call<profile> = ApiClient.getClient.getDetails()
             call.enqueue(object : Callback<profile> {
                 override fun onResponse(call: Call<profile>?, response: Response<profile>?) {
-                    val body = response!!.body()!!.data
-                    Log.e("sucess", "" + body)
+//                    val body = response!!.body()!!.data
+                    Log.e("sucess", "" +response)
+                    Log.e("dataname",""+ response!!.body()!!.data.name)
 
                 }
 

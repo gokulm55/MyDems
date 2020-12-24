@@ -19,20 +19,17 @@ object ApiClient
                 .create()
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-            val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-            val httpClient = OkHttpClient.Builder()
-            httpClient.addInterceptor(object: Interceptor {
+            val client = OkHttpClient.Builder().addInterceptor(object: Interceptor {
                 @Throws(IOException::class)
                 override fun intercept(chain:Interceptor.Chain): Response {
                     val original = chain.request()
                     val request = original.newBuilder()
-                        .header("User-Agent", "mydems")
-                        .header("Accept", "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjUzYWZkMDVhMWQxZDVmYTMwYzc2MzAyOWZkNDljMTRkMDIzNzM4ZmMwZjNlMjdiYjMzMzMwNTIwM2Q0MzA3MzFmYmY4MjA5Y2I0YzhmNzIyIn0.eyJhdWQiOiIxIiwianRpIjoiNTNhZmQwNWExZDFkNWZhMzBjNzYzMDI5ZmQ0OWMxNGQwMjM3MzhmYzBmM2UyN2JiMzMzMzA1MjAzZDQzMDczMWZiZjgyMDljYjRjOGY3MjIiLCJpYXQiOjE2MDg4MDE1NzIsIm5iZiI6MTYwODgwMTU3MiwiZXhwIjoxNjQwMzM3NTcyLCJzdWIiOiIzOCIsInNjb3BlcyI6W119.kshEYeT7PPDrzq4zD862vm7nwjv4kWFp_QJI39LmzqW2iMUMJT03cTz96st8WHlqZxGacj6vGaLgpnSLuB3ycBzUBh8fjNYv-dg8hefmkJ6_9iRDs624qHjcAiEi0UgzA3IkZ8PGj71CaYBxPO4R8-q9D_FzllaTIOP5aarRlK7_oUJ6L7f_OL6LeobeTeH3PqL7bvmZMwS_MYRLYPGzdO3fcTkHDexCqMauN3QQdIiOAO-Z6CNHAszTESbcCvLbVeVZqXqLEWFrzswbioi1xs74HdZS6mFB1jxt-iDwAfceoQAU2hR_vSM6K3IeWTDguDDi1mF6ItOiQP7nbokUw1O0roTlOwuCQfd6WidVegvEfqiHT67cnegaLG1kBYepxv3mMSD87JJrpA6ca8W37Ms2IPZtNJe39Km6iJlyFtP1Kiy0C6aQRukzR9OeugDT5lxMx9GsQeGTgegv4Myi4zwGTn8QxMe-OSZ4SdrohRNJeAYOCTuIwzwLPeNpFNjDy6AO6u6N5_3HOQUDVLMZYUvmqC7LXcAK6yDzuhT6Hn31Zb7HxGEiMe9wV1zdpVx1s208UyPzenGorf84f4gOMsVIYHrCKHdtdM0n_FoYi1w1RIcFMvCcV8nxkkyTI3r6s1JbJDCOF2egGFpXcpesU7jYMpt5-xcD0qxocm2AP0A")
-                        .method(original.method(), original.body())
+                        .addHeader("Accept", "application/json")
+                        .addHeader("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImNkYmM3MjE4NzdlYTU0ZTk5MWEwMjZlZDI3YWVlZDMwZWYyZTAzZjMwMmViYjkzNmFhN2NmMzNjYjc1YjA3ZTg5NWJlOWMzYmNiZGNiZTNiIn0.eyJhdWQiOiIxIiwianRpIjoiY2RiYzcyMTg3N2VhNTRlOTkxYTAyNmVkMjdhZWVkMzBlZjJlMDNmMzAyZWJiOTM2YWE3Y2YzM2NiNzViMDdlODk1YmU5YzNiY2JkY2JlM2IiLCJpYXQiOjE2MDg4MTYyMTMsIm5iZiI6MTYwODgxNjIxMywiZXhwIjoxNjQwMzUyMjEzLCJzdWIiOiI0MCIsInNjb3BlcyI6W119.ygwTweU5791de_oak2sXCGJb7dZRUGs_bARHXAdKwnGx8S7IVJNR1ZNRkHeo4xQ_xrbXH1Ia6-42SRZvmkYoxzqk26N3FkH2SP8KA527_hfwasxG1LT88LVAow_KXNQ7_U8yuuTKJBrZP0G-kPk6InsZz9eVAnaltkRduI_W-I6ROzZ0C7TxsRUc5xeq3VjLByoSvwu760KPu8-4ZkFNFRk9QijzbosqSEqM9XPmL6ILM3ig7ApS82a01qFEkijKAbS430Yjuw-UDnBnkuIXLUYeVAovS3Ajq54zv0pqheGoU5CIYGZRjnJNDW-30ehieB6HPBHnpcdDbw_blvJxDzfxpvLosQ7cCjGotQ1G1oxujPcpQk1UrF6GjsVpvH2ZaGiGLVpOA4_ZwRJr0_xKqGpBd5VKPll7Zm0hoTmROZ3w46iqYI34ofJK6OafUcxanNt-4nIT7QL3YdA8_zv1H2N2DGmhpuu3MzKSq4Dm5LhWeAhYIRheSTSgwY6PCCcvt2877qrNGgBZ5eV2bthv9_XVxdQfJ4O9-bD72Vn2r-ARf4boxow3cvb3qM8GtSSRdGVtfHNdsobHD4Z32lLbMEoCHcFm1EKv9G2KLhXeZKkCdsqasSc4Kfyw7JsrRNn9bTOqLHJGJGkG7kDB6TnqaHAZKWYmNOlHt6KCiuULsR8")
                         .build()
                     return chain.proceed(request)
                 }
-            })
+            }).build()
 
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
