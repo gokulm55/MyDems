@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 //                    val body = response!!.body()!!.data
                     Log.e("sucess", "" +response)
                     Log.e("dataname",""+ response!!.body()!!.data.name)
+                    Log.e("image",""+response.body()!!.data.profile_pic)
 
                 }
 
